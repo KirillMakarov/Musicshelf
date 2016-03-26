@@ -1,9 +1,10 @@
-package com.kamakarov.musicshelf;
+package com.kamakarov.musicshelf.screens.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.kamakarov.musicshelf.R;
+
+public final class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
