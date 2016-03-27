@@ -1,16 +1,13 @@
 package com.kamakarov.musicshelf.gui.activities;
 
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
-import com.kamakarov.musicshelf.R;
+import com.kamakarov.musicshelf.gui.fragments.SingerListFragmentBase;
 
-import butterknife.ButterKnife;
+public final class MainActivity extends SingleFragmentActivity {
 
-public final class MainActivity extends BaseActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    protected Fragment createFragment() {
+        return SingerListFragmentBase.newInstance();
     }
 }

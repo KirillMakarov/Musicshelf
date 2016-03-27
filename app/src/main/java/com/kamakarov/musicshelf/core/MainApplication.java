@@ -12,7 +12,7 @@ import io.fabric.sdk.android.Fabric;
 
 public final class MainApplication extends Application {
 
-
+    private static MainApplication application;
     private RefWatcher refWatcher;
     private CoreComponent component;
 
@@ -23,6 +23,7 @@ public final class MainApplication extends Application {
     }
 
     private void init() {
+        application = this;
         refWatcher = LeakCanary.install(this);
         Fabric.with(this, new Crashlytics(), new Answers());
 
@@ -35,7 +36,11 @@ public final class MainApplication extends Application {
         return application.refWatcher;
     }
 
-    public CoreComponent getComponent() {
-        return component;
+    public static CoreComponent getComponent() {
+        return application.component;
+    }
+
+    public static Context getAppContext() {
+        return application.getApplicationContext();
     }
 }
