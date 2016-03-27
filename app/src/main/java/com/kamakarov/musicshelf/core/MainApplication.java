@@ -14,6 +14,7 @@ public final class MainApplication extends Application {
 
 
     private RefWatcher refWatcher;
+    private CoreComponent component;
 
     @Override
     public void onCreate() {
@@ -24,10 +25,17 @@ public final class MainApplication extends Application {
     private void init() {
         refWatcher = LeakCanary.install(this);
         Fabric.with(this, new Crashlytics(), new Answers());
+
+        component = DaggerCoreComponent.builder().
+                musicshelfModule(new MusicshelfModule()).build();
     }
 
     public static RefWatcher getRefWatcher(Context context) {
         MainApplication application = (MainApplication) context.getApplicationContext();
         return application.refWatcher;
+    }
+
+    public CoreComponent getComponent() {
+        return component;
     }
 }

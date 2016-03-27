@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt' //needed for source code generation
 
 repositories {
     jcenter()
@@ -60,6 +61,10 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
+
+    apt 'com.google.dagger:dagger-compiler:2.0.1' //needed for source code generation
+    compile 'com.google.dagger:dagger:2.0.1' //dagger itself
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 
 buildscript {
