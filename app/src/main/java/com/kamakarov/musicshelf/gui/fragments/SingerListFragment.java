@@ -5,19 +5,24 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.kamakarov.musicshelf.R;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SingerListFragmentBase extends FragmentBase {
-    public static SingerListFragmentBase newInstance() {
+public class SingerListFragment extends FragmentBase {
+    public static SingerListFragment newInstance() {
         Bundle args = new Bundle();
 
-        SingerListFragmentBase fragment = new SingerListFragmentBase();
+        SingerListFragment fragment = new SingerListFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Bind(R.id.click_button_fragment_singer)
+    Button button;
 
     @Nullable
     @Override
@@ -30,5 +35,6 @@ public class SingerListFragmentBase extends FragmentBase {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        button.setOnClickListener(v -> intentManager.openDetailedInfo(getActivity()));
     }
 }

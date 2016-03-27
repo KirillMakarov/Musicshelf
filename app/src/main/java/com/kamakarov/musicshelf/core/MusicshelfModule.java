@@ -1,5 +1,7 @@
 package com.kamakarov.musicshelf.core;
 
+import com.kamakarov.musicshelf.gui.IIntentManager;
+import com.kamakarov.musicshelf.gui.IntentManagerImpl;
 import com.kamakarov.musicshelf.web.IMusicApi;
 import com.kamakarov.musicshelf.web.MusicApiImpl;
 
@@ -16,4 +18,9 @@ public class MusicshelfModule {
         return new MusicApiImpl();
     }
 
+    @Provides
+    @Singleton
+    public IIntentManager provideIntentManager() {
+        return new IntentManagerImpl();
+    }
 }
