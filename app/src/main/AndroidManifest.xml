@@ -16,7 +16,7 @@
             android:name="io.fabric.ApiKey"
             android:value="efa7266284da6e8627726df57c77f0d90f7c5d0c"/>
 
-        <activity android:name=".screens.activities.MainActivity">
+        <activity android:name=".gui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

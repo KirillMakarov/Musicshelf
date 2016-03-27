@@ -1,4 +1,4 @@
-package com.kamakarov.musicshelf.screens.fragments;
+package com.kamakarov.musicshelf.gui.fragments;
 
 import android.support.v4.app.Fragment;
 

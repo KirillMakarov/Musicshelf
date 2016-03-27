@@ -1,4 +1,4 @@
-package com.kamakarov.musicshelf.screens.activities;
+package com.kamakarov.musicshelf.gui.activities;
 
 import android.os.Bundle;
 
