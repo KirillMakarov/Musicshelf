@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -26,7 +27,7 @@ public final class MainApplication extends Application {
         application = this;
         refWatcher = LeakCanary.install(this);
         Fabric.with(this, new Crashlytics(), new Answers());
-
+        Fresco.initialize(this);
         component = DaggerCoreComponent.builder().
                 musicshelfModule(new MusicshelfModule()).build();
     }

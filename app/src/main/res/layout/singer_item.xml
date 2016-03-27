@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="132dp"
+                android:padding="16dp">
 
-    <TextView
-        android:id="@+id/singer_name"
-        android:layout_width="wrap_content"
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/singer_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:failureImage="@drawable/placeholder"
+        fresco:failureImageScaleType="centerCrop"
+        fresco:placeholderImage="@drawable/placeholder"
+        fresco:placeholderImageScaleType="centerCrop"
+        tools:src="@drawable/placeholder"
+        />
+
+    <RelativeLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="Name"/>
+        android:layout_toEndOf="@id/singer_image"
+        android:layout_toRightOf="@id/singer_image">
 
-</FrameLayout>
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/singer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Name"/>
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/singer_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/singer_name"
+            tools:text="rock, pop, RnB"/>
+
+        <TextView
+            android:id="@+id/singer_albums_songs"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="100 albums, 50 songs"/>
+
+    </RelativeLayout>
+</RelativeLayout>

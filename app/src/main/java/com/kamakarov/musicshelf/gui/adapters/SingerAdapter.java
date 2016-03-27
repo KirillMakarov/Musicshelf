@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeView;
 import com.kamakarov.musicshelf.R;
 import com.kamakarov.musicshelf.model.Singer;
 
@@ -34,7 +37,32 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
     @Override
     public void onBindViewHolder(UnitViewHolder holder, int position) {
         Singer singer = singerList.get(position);
+
         holder.singerName.setText(singer.getName());
+
+
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(singer.getCover().getSmall())
+                .build();
+        holder.singerImage.setController(controller);
+
+        // TODO: 27.03.16 Extract to utils:
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < singer.getGenres().size(); i++) {
+            sb.append(singer.getGenres().get(i));
+            if (i != singer.getGenres().size() - 1) {
+                //if not last
+                sb.append(", ");
+            }
+        }
+        holder.singerGenres.setText(sb.toString());
+
+        // TODO: 27.03.16 extract, support plural
+        int albums = singer.getAlbums();
+        int songs = singer.getTracks();
+        String albumsAndSongs = albums + " альбом, " + songs + " песни";
+        holder.singerAlbumsAndSongs.setText(albumsAndSongs);
+
     }
 
     @Override
@@ -46,6 +74,15 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
 
         @Bind(R.id.singer_name)
         TextView singerName;
+
+        @Bind(R.id.singer_image)
+        DraweeView singerImage;
+
+        @Bind(R.id.singer_genres)
+        TextView singerGenres;
+
+        @Bind(R.id.singer_albums_songs)
+        TextView singerAlbumsAndSongs;
 
         public UnitViewHolder(View itemView) {
             super(itemView);
