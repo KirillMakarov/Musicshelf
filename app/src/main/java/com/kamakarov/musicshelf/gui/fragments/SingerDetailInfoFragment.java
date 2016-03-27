@@ -12,7 +12,7 @@ import com.kamakarov.musicshelf.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SingerDetailInfoFragment extends FragmentBase {
+public final class SingerDetailInfoFragment extends FragmentBase {
     private static final String ID_KEY = "id_key";
 
     public static SingerDetailInfoFragment newInstance(int smth) {
