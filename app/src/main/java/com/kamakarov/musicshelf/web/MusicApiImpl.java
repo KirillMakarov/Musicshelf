@@ -11,7 +11,7 @@ import rx.Observable;
 
 public class MusicApiImpl implements IMusicApi {
 
-    private static final String WEB_URL = "http://cache-default06f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016";
+    private static final String WEB_URL = "http://cache-default06f.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/";
     private MusicService musicService;
 
     public MusicApiImpl() {

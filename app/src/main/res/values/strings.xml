@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Musicshelf</string>
+    <string name="app_name" translatable="false">Musicshelf</string>
+    <string name="artists_label">Artists</string>
 </resources>
