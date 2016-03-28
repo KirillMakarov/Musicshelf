@@ -15,6 +15,7 @@ import com.kamakarov.musicshelf.gui.adapters.SingerAdapter;
 import com.kamakarov.musicshelf.model.Singer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -77,6 +78,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         api.getSingers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .onErrorReturn(throwable -> Collections.emptyList()) // TODO: 28.03.16 improve handling 
                 .subscribe(singers -> {
                     // FIXME: 27.03.16 it can be doinge before onCreateView, just after onCreate.
                     Log.d("eee", "data is fetched");
