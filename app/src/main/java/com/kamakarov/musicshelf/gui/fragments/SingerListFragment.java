@@ -79,15 +79,17 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorReturn(throwable -> Collections.emptyList()) // TODO: 28.03.16 improve handling 
-                .subscribe(singers -> {
-                    // FIXME: 27.03.16 it can be doinge before onCreateView, just after onCreate.
-                    Log.d("eee", "data is fetched");
-                    singerList.addAll(singers);
-                    if (mAdapter != null)
-                        mAdapter.notifyDataSetChanged();
-                    if (swipeRefreshLayout != null){
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+                .subscribe(this::showData);
+    }
+
+    private void showData(List<Singer> singers) {
+        // FIXME: 27.03.16 it can be doing before onCreateView, just after onCreate.
+        Log.d("eee", "data is fetched");
+        singerList.addAll(singers);
+        if (mAdapter != null)
+            mAdapter.notifyDataSetChanged();
+        if (swipeRefreshLayout != null){
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 }
