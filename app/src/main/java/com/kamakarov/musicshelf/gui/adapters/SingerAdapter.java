@@ -1,7 +1,6 @@
 package com.kamakarov.musicshelf.gui.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +11,28 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
 import com.kamakarov.musicshelf.R;
-import com.kamakarov.musicshelf.gui.activities.DetailInfoActivity;
+import com.kamakarov.musicshelf.core.MainApplication;
+import com.kamakarov.musicshelf.gui.IIntentManager;
 import com.kamakarov.musicshelf.gui.listeners.OnItemClickListenerInList;
 import com.kamakarov.musicshelf.model.Singer;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.UnitViewHolder> implements OnItemClickListenerInList {
 
+    @Inject
+    IIntentManager intentManager;
+
     Context context;
     List<Singer> singerList;
 
     public SingerAdapter(Context context, List<Singer> singerList) {
+        MainApplication.getComponent().inject(this);
         this.context = context;
         this.singerList = singerList;
     }
@@ -78,9 +84,7 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
     public void onClickPosition(int position) {
         if (position >= 0 && position < singerList.size()) {
             Singer singer = singerList.get(position);
-            Intent intent = new Intent(context, DetailInfoActivity.class);
-            intent.putExtra(DetailInfoActivity.SINGER_OBJECT_KEY, singer);
-            context.startActivity(intent);
+            intentManager.openDetailedInfo(context, singer);
         }
     }
 
