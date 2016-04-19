@@ -58,10 +58,11 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
         }
         holder.singerGenres.setText(sb.toString());
 
-        // TODO: 27.03.16 extract, support plural
         int albums = singer.getAlbums();
         int songs = singer.getTracks();
-        String albumsAndSongs = albums + " альбом, " + songs + " песни";
+        String albumText = context.getResources().getQuantityString(R.plurals.albums_plural, albums, albums);
+        String songText = context.getResources().getQuantityString(R.plurals.songs_plural, songs, songs);
+        String albumsAndSongs = albumText + ", " + songText;
         holder.singerAlbumsAndSongs.setText(albumsAndSongs);
     }
 
@@ -94,9 +95,7 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
         public UnitViewHolder(View itemView, OnItemClickListenerInList listenerInList) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
-                listenerInList.onClickPosition(getAdapterPosition());
-            });
+            itemView.setOnClickListener(v -> listenerInList.onClickPosition(getAdapterPosition()));
 
         }
     }

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name" translatable="false">Musicshelf</string>
     <string name="artists_label">Artists</string>
+    <plurals name="albums_plural">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
+    <plurals name="songs_plural">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
 </resources>
