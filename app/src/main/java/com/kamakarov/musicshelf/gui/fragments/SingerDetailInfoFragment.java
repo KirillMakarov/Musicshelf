@@ -43,7 +43,8 @@ public final class SingerDetailInfoFragment extends FragmentBase {
         Bundle bundle = getArguments();
         Singer singer = bundle.getParcelable(SINGER_KEY);
         if (singer != null) {
-            textView.setText(singer.getName());
+            getActivity().setTitle(singer.getName());
+            textView.setText(singer.getDescription());
         }
     }
 }
