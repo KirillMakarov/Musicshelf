@@ -38,23 +38,20 @@
 
             <TextView
                 android:id="@+id/singer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/regularTextHeader"
                 android:layout_marginTop="8dp"
                 tools:text="Name"/>
 
             <TextView
                 android:id="@+id/singer_genres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/weakText"
                 android:layout_below="@id/singer_name"
                 android:layout_marginTop="8dp"
                 tools:text="rock, pop, RnB"/>
 
             <TextView
                 android:id="@+id/singer_albums_songs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/weakText"
                 android:layout_alignParentBottom="true"
                 tools:text="100 albums, 50 songs"/>
 

@@ -30,36 +30,30 @@
 
             <TextView
                 android:id="@+id/singer_genres_singer_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/weakText"
+                android:layout_marginTop="0dp"
                 tools:text="dance, electronics"/>
 
 
             <TextView
                 android:id="@+id/singer_albums_songs_singer_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/weakText"
                 android:layout_below="@id/singer_genres_singer_info"
-                android:layout_marginTop="8dp"
-                tools:text="5 альбомов\t⋅\t44 песни"/>
+                tools:text="5 альбомов\t\t⋅\t\t44 песни"/>
 
             <TextView
+
                 android:id="@+id/title_biography_singer_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/regularTextHeader"
                 android:layout_below="@id/singer_albums_songs_singer_info"
-                android:layout_marginTop="8dp"
                 android:text="@string/biography_title"
-                android:textSize="16sp"
                 />
 
             <TextView
                 android:id="@+id/singer_description_singer_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/regularText"
+                android:layout_marginTop="8dp"
                 android:layout_below="@id/title_biography_singer_info"
-                android:layout_marginTop="6dp"
-                android:lineSpacingMultiplier="1.5"
                 tools:text="Ansgar (latinized Ansgarius; Old Norse Ásgeirr) is a Germanic given name, composed of the elements ans god, and gar spear.[1] Saint Ansgar, (801 – 865) was an archbishop of Hamburg-Bremen, active in the Christianization of Scandinavia. His feast day is 3 February."
                 />
         </RelativeLayout>
