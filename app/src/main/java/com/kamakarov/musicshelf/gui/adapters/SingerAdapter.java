@@ -11,6 +11,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
 import com.kamakarov.musicshelf.R;
+import com.kamakarov.musicshelf.gui.listeners.OnItemClickListenerInList;
 import com.kamakarov.musicshelf.model.Singer;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.UnitViewHolder> {
+public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.UnitViewHolder> implements OnItemClickListenerInList {
 
     Context context;
     List<Singer> singerList;
@@ -31,7 +32,7 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
     @Override
     public UnitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.singer_item, parent, false);
-        return new UnitViewHolder(v);
+        return new UnitViewHolder(v, this);
     }
 
     @Override
@@ -62,12 +63,18 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
         int songs = singer.getTracks();
         String albumsAndSongs = albums + " альбом, " + songs + " песни";
         holder.singerAlbumsAndSongs.setText(albumsAndSongs);
-
     }
 
     @Override
     public int getItemCount() {
         return singerList.size();
+    }
+
+
+    @Override
+    public void onClickPosition(int position) {
+        if (position >= 0 && position < singerList.size()) {
+        }
     }
 
     public class UnitViewHolder extends RecyclerView.ViewHolder {
@@ -84,9 +91,13 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
         @Bind(R.id.singer_albums_songs)
         TextView singerAlbumsAndSongs;
 
-        public UnitViewHolder(View itemView) {
+        public UnitViewHolder(View itemView, OnItemClickListenerInList listenerInList) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                listenerInList.onClickPosition(getAdapterPosition());
+            });
+
         }
     }
 }
