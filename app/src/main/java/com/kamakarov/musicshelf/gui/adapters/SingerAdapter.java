@@ -14,6 +14,7 @@ import com.kamakarov.musicshelf.R;
 import com.kamakarov.musicshelf.core.MainApplication;
 import com.kamakarov.musicshelf.gui.IIntentManager;
 import com.kamakarov.musicshelf.gui.listeners.OnItemClickListenerInList;
+import com.kamakarov.musicshelf.gui.utils.StringUtil;
 import com.kamakarov.musicshelf.model.Singer;
 
 import java.util.List;
@@ -55,16 +56,8 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
                 .build();
         holder.singerImage.setController(controller);
 
-        // TODO: 27.03.16 Extract to utils:
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < singer.getGenres().size(); i++) {
-            sb.append(singer.getGenres().get(i));
-            if (i != singer.getGenres().size() - 1) {
-                //if not last
-                sb.append(", ");
-            }
-        }
-        holder.singerGenres.setText(sb.toString());
+        String genreString = StringUtil.concatenateWithComma(singer.getGenres());
+        holder.singerGenres.setText(genreString);
 
         int albums = singer.getAlbums();
         int songs = singer.getTracks();

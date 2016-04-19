@@ -1,12 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-    <TextView
-        android:id="@+id/id_textview_fragment_singer_info"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:orientation="vertical">
 
-</FrameLayout>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/big_cover_singer_info"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:failureImage="@drawable/placeholder"
+            fresco:failureImageScaleType="centerCrop"
+            fresco:placeholderImage="@drawable/placeholder"
+            fresco:placeholderImageScaleType="centerCrop"
+            tools:src="@drawable/placeholder"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/singer_genres_singer_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="dance, electronics"/>
+
+
+            <TextView
+                android:id="@+id/singer_albums_songs_singer_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/singer_genres_singer_info"
+                android:layout_marginTop="8dp"
+                tools:text="5 альбомов\t⋅\t44 песни"/>
+
+            <TextView
+                android:id="@+id/title_biography_singer_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/singer_albums_songs_singer_info"
+                android:layout_marginTop="8dp"
+                android:text="@string/biography_title"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/singer_description_singer_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_biography_singer_info"
+                android:layout_marginTop="6dp"
+                android:lineSpacingMultiplier="1.5"
+                tools:text="Ansgar (latinized Ansgarius; Old Norse Ásgeirr) is a Germanic given name, composed of the elements ans god, and gar spear.[1] Saint Ansgar, (801 – 865) was an archbishop of Hamburg-Bremen, active in the Christianization of Scandinavia. His feast day is 3 February."
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/id_textview_fragment_singer_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</ScrollView>

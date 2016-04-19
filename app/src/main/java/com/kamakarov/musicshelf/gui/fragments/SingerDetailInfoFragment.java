@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.DraweeView;
 import com.kamakarov.musicshelf.R;
+import com.kamakarov.musicshelf.gui.utils.StringUtil;
 import com.kamakarov.musicshelf.model.Singer;
 
 import butterknife.Bind;
@@ -26,8 +30,17 @@ public final class SingerDetailInfoFragment extends FragmentBase {
         return fragment;
     }
 
-    @Bind(R.id.id_textview_fragment_singer_info)
-    TextView textView;
+    @Bind(R.id.singer_genres_singer_info)
+    TextView genresTextView;
+
+    @Bind(R.id.singer_description_singer_info)
+    TextView descriptionTextView;
+
+    @Bind(R.id.big_cover_singer_info)
+    DraweeView singerBigImage;
+
+    @Bind(R.id.singer_albums_songs_singer_info)
+    TextView albumsAndSongTextVuew;
 
     @Nullable
     @Override
@@ -44,7 +57,23 @@ public final class SingerDetailInfoFragment extends FragmentBase {
         Singer singer = bundle.getParcelable(SINGER_KEY);
         if (singer != null) {
             getActivity().setTitle(singer.getName());
-            textView.setText(singer.getDescription());
+
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(singer.getCover().getBig())
+                    .build();
+            singerBigImage.setController(controller);
+
+            descriptionTextView.setText(singer.getDescription());
+
+            String albums = getContext().getResources().getQuantityString(R.plurals.albums_plural, singer.getAlbums(), singer.getAlbums());
+            String songs = getContext().getResources().getQuantityString(R.plurals.songs_plural, singer.getTracks(), singer.getTracks());
+            String marker = getContext().getString(R.string.dot_marker);
+            String albumsAndSongs = albums + "\t" + marker + "\t" + songs;
+            albumsAndSongTextVuew.setText(albumsAndSongs);
+
+            String genreString = StringUtil.concatenateWithComma(singer.getGenres());
+            genresTextView.setText(genreString);
+
         }
     }
 }

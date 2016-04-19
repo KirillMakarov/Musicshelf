@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Musicshelf</string>
+    <string name="dot_marker" translatable="false">⋅</string>
     <string name="artists_label">Artists</string>
+    <string name="biography_title">Biography</string>
     <plurals name="albums_plural">
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>
