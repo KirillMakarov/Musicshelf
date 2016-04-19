@@ -68,7 +68,7 @@ public final class SingerDetailInfoFragment extends FragmentBase {
             String albums = getContext().getResources().getQuantityString(R.plurals.albums_plural, singer.getAlbums(), singer.getAlbums());
             String songs = getContext().getResources().getQuantityString(R.plurals.songs_plural, singer.getTracks(), singer.getTracks());
             String marker = getContext().getString(R.string.dot_marker);
-            String albumsAndSongs = albums + "\t" + marker + "\t" + songs;
+            String albumsAndSongs = albums + "\t\t" + marker + "\t\t" + songs;
             albumsAndSongTextVuew.setText(albumsAndSongs);
 
             String genreString = StringUtil.concatenateWithComma(singer.getGenres());
