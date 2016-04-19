@@ -43,7 +43,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
@@ -66,7 +66,7 @@ dependencies {
     compile 'com.google.dagger:dagger:2.0.1' //dagger itself
     provided 'org.glassfish:javax.annotation:10.0-b28'
 
-    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
 
     compile 'com.facebook.fresco:fresco:0.9.0'
 }
