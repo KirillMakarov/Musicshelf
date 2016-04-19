@@ -11,7 +11,7 @@ public class IntentManagerImpl implements IIntentManager {
     public void openDetailedInfo(Context activity) {
         Intent intent = new Intent(activity, DetailInfoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(DetailInfoActivity.ID_KEY, 100500);
+        bundle.putInt(DetailInfoActivity.SINGER_OBJECT_KEY, 100500);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }

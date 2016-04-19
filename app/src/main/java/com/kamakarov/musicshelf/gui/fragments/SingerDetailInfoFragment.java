@@ -8,17 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kamakarov.musicshelf.R;
+import com.kamakarov.musicshelf.model.Singer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public final class SingerDetailInfoFragment extends FragmentBase {
-    private static final String ID_KEY = "id_key";
+    private static final String SINGER_KEY = "singer_key";
 
-    public static SingerDetailInfoFragment newInstance(int smth) {
+    public static SingerDetailInfoFragment newInstance(Singer singer) {
 
         Bundle args = new Bundle();
-        args.putInt(ID_KEY, smth);
+        args.putParcelable(SINGER_KEY, singer);
 
         SingerDetailInfoFragment fragment = new SingerDetailInfoFragment();
         fragment.setArguments(args);
@@ -40,7 +41,9 @@ public final class SingerDetailInfoFragment extends FragmentBase {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Bundle bundle = getArguments();
-        int id = bundle.getInt(ID_KEY);
-        textView.setText("Now id: " + id);
+        Singer singer = bundle.getParcelable(SINGER_KEY);
+        if (singer != null) {
+            textView.setText(singer.getName());
+        }
     }
 }
