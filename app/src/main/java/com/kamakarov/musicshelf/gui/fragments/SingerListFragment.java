@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.kamakarov.musicshelf.R;
 import com.kamakarov.musicshelf.gui.adapters.SingerAdapter;
 import com.kamakarov.musicshelf.model.Singer;
+import com.kamakarov.musicshelf.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -74,21 +76,48 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         fetchData();
     }
 
+    Subscription databaseSubsctiption;
+    Subscription apiSubscription;
+
     private void fetchData() {
-        api.getSingers()
+        RxUtils.unsubscribeNullSafe(apiSubscription);
+        if (databaseSubsctiption == null) {
+            //first time: try to get from database, after that, show only when table was changed
+            databaseSubsctiption = dbManager
+                    .getSingers()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::showData);
+        }
+
+
+        apiSubscription = api.getSingers()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorReturn(throwable -> Collections.emptyList()) // TODO: 28.03.16 improve handling 
-                .subscribe(this::showData);
+                .observeOn(Schedulers.io())
+                .onErrorReturn(throwable -> Collections.emptyList()) // TODO: 28.03.16 improve handling
+                .subscribe(this::saveData);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxUtils.unsubscribeNullSafe(databaseSubsctiption);
+        RxUtils.unsubscribeNullSafe(apiSubscription);
+    }
+
+    private void saveData(List<Singer> singers) {
+        dbManager.addSingers(singers);
     }
 
     private void showData(List<Singer> singers) {
         // FIXME: 27.03.16 it can be doing before onCreateView, just after onCreate.
         Log.d("eee", "data is fetched");
+//        singerList.clear();
         singerList.addAll(singers);
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
-        if (swipeRefreshLayout != null){
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
     }

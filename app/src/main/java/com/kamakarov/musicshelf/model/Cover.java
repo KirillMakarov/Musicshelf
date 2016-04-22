@@ -15,6 +15,13 @@ public final class Cover implements Parcelable {
         return small;
     }
 
+    public void setSmall(String small) {
+        this.small = small;
+    }
+
+    public void setBig(String big) {
+        this.big = big;
+    }
 
     @Override
     public int describeContents() {

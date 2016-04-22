@@ -11,7 +11,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
 import com.kamakarov.musicshelf.R;
-import com.kamakarov.musicshelf.gui.utils.StringUtil;
+import com.kamakarov.musicshelf.utils.StringUtil;
 import com.kamakarov.musicshelf.model.Singer;
 
 import butterknife.Bind;

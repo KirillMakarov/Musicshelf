@@ -1,4 +1,4 @@
-package com.kamakarov.musicshelf.gui.utils;
+package com.kamakarov.musicshelf.utils;
 
 import java.util.List;
 

@@ -14,8 +14,9 @@ import com.kamakarov.musicshelf.R;
 import com.kamakarov.musicshelf.core.MainApplication;
 import com.kamakarov.musicshelf.gui.IIntentManager;
 import com.kamakarov.musicshelf.gui.listeners.OnItemClickListenerInList;
-import com.kamakarov.musicshelf.gui.utils.StringUtil;
+import com.kamakarov.musicshelf.model.Cover;
 import com.kamakarov.musicshelf.model.Singer;
+import com.kamakarov.musicshelf.utils.StringUtil;
 
 import java.util.List;
 
@@ -50,9 +51,14 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
 
         holder.singerName.setText(singer.getName());
 
+        Cover cover = singer.getCover();
+        String path = null;
+        if (cover != null) {
+            path = cover.getSmall();
+        }
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(singer.getCover().getSmall())
+                .setUri(path)
                 .build();
         holder.singerImage.setController(controller);
 

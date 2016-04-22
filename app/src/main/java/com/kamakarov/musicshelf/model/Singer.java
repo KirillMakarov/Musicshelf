@@ -47,6 +47,37 @@ public final class Singer implements Parcelable {
         return cover;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public void setTracks(int tracks) {
+        this.tracks = tracks;
+    }
+
+    public void setAlbums(int albums) {
+        this.albums = albums;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
 
     @Override
     public int describeContents() {
