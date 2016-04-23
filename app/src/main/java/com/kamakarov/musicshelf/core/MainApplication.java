@@ -6,6 +6,8 @@ import android.content.Context;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.kamakarov.musicshelf.store.DaggerDbComponent;
+import com.kamakarov.musicshelf.store.DbComponent;
 import com.kamakarov.musicshelf.store.DbModule;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -17,6 +19,11 @@ public final class MainApplication extends Application {
     private static MainApplication application;
     private RefWatcher refWatcher;
     private CoreComponent component;
+    private DbComponent dbComponent;
+
+    public static DbComponent getDbComponent() {
+        return application.dbComponent;
+    }
 
     @Override
     public void onCreate() {
@@ -29,9 +36,14 @@ public final class MainApplication extends Application {
         refWatcher = LeakCanary.install(this);
         Fabric.with(this, new Crashlytics(), new Answers());
         Fresco.initialize(this);
-        component = DaggerCoreComponent.builder().
-                musicshelfModule(new MusicshelfModule())
-                .dbModule(new DbModule(getApplicationContext())).build();
+        component = DaggerCoreComponent.builder()
+                .musicshelfModule(new MusicshelfModule())
+                .build();
+
+        dbComponent = DaggerDbComponent.builder()
+                .dbModule(new DbModule(getApplicationContext()))
+                .build();
+
 
     }
 

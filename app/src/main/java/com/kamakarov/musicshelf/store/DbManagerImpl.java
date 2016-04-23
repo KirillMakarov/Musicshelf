@@ -3,6 +3,7 @@ package com.kamakarov.musicshelf.store;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.kamakarov.musicshelf.core.MainApplication;
 import com.kamakarov.musicshelf.model.Cover;
 import com.kamakarov.musicshelf.model.Singer;
 import com.kamakarov.musicshelf.store.structure.CoverStructure;
@@ -15,13 +16,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import rx.Observable;
 
+@Singleton
 public class DbManagerImpl implements DbManager {
+
+    @Inject
     BriteDatabase briteDatabase;
 
-    public DbManagerImpl(BriteDatabase bd) {
-        briteDatabase = bd;
+    @Inject
+    public DbManagerImpl() {
+        MainApplication.getDbComponent().inject(this);
     }
 
 
