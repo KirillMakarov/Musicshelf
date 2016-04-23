@@ -2,6 +2,7 @@ package com.kamakarov.musicshelf.gui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,6 @@ import com.kamakarov.musicshelf.model.Singer;
 import com.kamakarov.musicshelf.utils.RxUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,14 +41,21 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     @Bind(R.id.recycler_view_singer_list)
     RecyclerView recyclerView;
 
+    @Bind(R.id.report_empty)
+    View emptyPlaceholder;
+
+    @Bind(R.id.root_view_singer_list)
+    View rootView;
+
     private final List<Singer> singerList = new ArrayList<>();
     private SingerAdapter mAdapter;
+    private boolean isFirstTimeCreated;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
+        isFirstTimeCreated = true;
         fetchData();
     }
 
@@ -67,8 +74,14 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         mAdapter = new SingerAdapter(getContext(), singerList);
         recyclerView.setAdapter(mAdapter);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        showEmptyPlaceholder(singerList.isEmpty());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isFirstTimeCreated = false;
     }
 
     @Override
@@ -93,10 +106,10 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
 
         apiSubscription = api.getSingers()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(this::onErrorInternetConnection)
                 .observeOn(Schedulers.io())
-                .onErrorReturn(throwable -> Collections.emptyList()) // TODO: 28.03.16 improve handling
-                .subscribe(this::saveData);
-
+                .subscribe(this::saveData, throwable -> {/*do nothing, because we handle in doOnError*/});
     }
 
     @Override
@@ -110,15 +123,50 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         dbManager.addSingers(singers);
     }
 
+    private void onErrorInternetConnection(Throwable throwable) {
+        Log.d("eee", throwable.getMessage());
+
+        if (singerList == null || singerList.isEmpty()) {
+            showEmptyPlaceholder(true);
+        } else {
+            showEmptyPlaceholder(false);
+        }
+
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            showSnackBarRetry();
+        }
+
+    }
+
+    private void showSnackBarRetry() {
+        Snackbar.make(rootView, "Clicked!", Snackbar.LENGTH_SHORT).show();
+        //// TODO: 23.04.16  Add snack with retry
+    }
+
+    private void showEmptyPlaceholder(boolean needShow) {
+        if (emptyPlaceholder != null) {
+            if (needShow && !isFirstTimeCreated) {
+                emptyPlaceholder.setVisibility(View.VISIBLE);
+            } else {
+                emptyPlaceholder.setVisibility(View.GONE);
+            }
+        }
+    }
+
     private void showData(List<Singer> singers) {
         // FIXME: 27.03.16 it can be doing before onCreateView, just after onCreate.
+        emptyPlaceholder.setVisibility(View.GONE);
         Log.d("eee", "data is fetched");
 //        singerList.clear();
         singerList.addAll(singers);
+        isFirstTimeCreated = false;
+        showEmptyPlaceholder(singerList.isEmpty());
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
+        Log.d("eee", "count in list: " + singerList.size());
     }
 }

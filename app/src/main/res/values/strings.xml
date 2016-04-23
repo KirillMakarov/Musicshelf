@@ -11,4 +11,7 @@
         <item quantity="one">%d song</item>
         <item quantity="other">%d songs</item>
     </plurals>
+    <string name="empty_try_later">There was a problem syncing the data, please try again later.</string>
+    <string name="content_description_no_data">warning: no data, try again later</string>
+    <string name="retry_title">retry</string>
 </resources>

@@ -15,4 +15,7 @@
         <item quantity="other">%d песен</item>
     </plurals>
     <string name="biography_title">Биография</string>
+    <string name="empty_try_later">Не удалось синхронизровать данные. Повторите попытку позже.</string>
+    <string name="content_description_no_data">предупреждение: нет данных, повторите позже</string>
+    <string name="retry_title">повторить</string>
 </resources>
