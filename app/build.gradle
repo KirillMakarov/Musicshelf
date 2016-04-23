@@ -10,8 +10,7 @@ repositories {
 }
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.kamakarov.musicshelf"
         minSdkVersion 14
@@ -29,12 +28,10 @@ android {
             versionNameSuffix "-dev"
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     lintOptions {
         disable 'InvalidPackage'
     }
@@ -48,29 +45,24 @@ dependencies {
         transitive = true;
     }
     compile 'com.jakewharton:butterknife:7.0.1'
-
     compile 'io.reactivex:rxandroid:1.1.0'
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex:rxjava:1.1.0'
-
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
-
-    apt 'com.google.dagger:dagger-compiler:2.0.1' //needed for source code generation
-    compile 'com.google.dagger:dagger:2.0.1' //dagger itself
+    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    //needed for source code generation
+    compile 'com.google.dagger:dagger:2.0.1'
+    //dagger itself
     provided 'org.glassfish:javax.annotation:10.0-b28'
-
     compile 'com.android.support:recyclerview-v7:23.3.0'
-
     compile 'com.facebook.fresco:fresco:0.9.0'
     compile 'com.squareup.sqlbrite:sqlbrite:0.6.3'
-
     compile 'com.android.support:design:23.3.0'
 }
 
