@@ -78,7 +78,12 @@ public class DbManagerImpl implements DbManager {
     }
 
     public Observable<List<Singer>> getSingers() {
-        return briteDatabase.createQuery(SingerStructure.NAME, "SELECT * FROM " + SingerStructure.NAME).map(this::getSingersByCursor);
+        return briteDatabase
+                .createQuery(SingerStructure.NAME,
+                        "SELECT * FROM " + SingerStructure.NAME + " INNER JOIN " + CoverStructure.NAME +
+                                " ON " + SingerStructure.NAME + "." + SingerStructure.Column.ID + " = "
+                                + CoverStructure.NAME + "." + CoverStructure.Column.SINGER_ID)
+                .map(this::getSingersByCursor);
     }
 
     private List<Singer> getSingersByCursor(SqlBrite.Query query) {
@@ -93,17 +98,9 @@ public class DbManagerImpl implements DbManager {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Singer singer = parseSinger(cursor);
-                String[] singerID = {singer.getId() + ""};
-                Cursor coverCursor = briteDatabase.query("SELECT * FROM " + CoverStructure.NAME + " WHERE " + CoverStructure.Column.SINGER_ID + " =?", singerID);
-                if (coverCursor != null) {
-                    try {
-                        coverCursor.moveToFirst();
-                        Cover cover = parseCover(coverCursor);
-                        singer.setCover(cover);
-                    } finally {
-                        coverCursor.close();
-                    }
-                }
+                Cover cover = parseCover(cursor);
+                singer.setCover(cover);
+
                 listOfPersistentObjects.add(singer);
                 cursor.moveToNext();
             }
