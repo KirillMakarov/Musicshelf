@@ -182,8 +182,8 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         Log.d("eee", "data is fetched");
         singerList.clear();
         singerList.addAll(singers);
-        isFirstTimeCreated = false;
-        showEmptyPlaceholder(singerList.isEmpty());
+        showEmptyPlaceholder(singerList.isEmpty()); // if it is first time, that we will update from internet
+        isFirstTimeCreated = false;//
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
         Log.d("eee", "count in list: " + singerList.size());
