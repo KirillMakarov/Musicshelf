@@ -18,6 +18,7 @@ import com.kamakarov.musicshelf.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,6 +51,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     private final List<Singer> singerList = new ArrayList<>();
     private SingerAdapter mAdapter;
     private boolean isFirstTimeCreated;
+    private AtomicBoolean isFromSnackBar = new AtomicBoolean();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         showEmptyPlaceholder(singerList.isEmpty());
+        isFromSnackBar.set(false);
     }
 
     @Override
@@ -120,6 +123,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     private void saveData(List<Singer> singers) {
+        isFromSnackBar.set(false);
         dbManager.addSingers(singers);
     }
 
@@ -132,16 +136,21 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
             showEmptyPlaceholder(false);
         }
 
-        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+        if (swipeRefreshLayout != null && (swipeRefreshLayout.isRefreshing() || isFromSnackBar.get())) {
             swipeRefreshLayout.setRefreshing(false);
             showSnackBarRetry();
         }
 
+        isFromSnackBar.set(false);
     }
 
     private void showSnackBarRetry() {
-        Snackbar.make(rootView, "Clicked!", Snackbar.LENGTH_SHORT).show();
-        //// TODO: 23.04.16  Add snack with retry
+        Snackbar.make(rootView, R.string.no_connection, Snackbar.LENGTH_SHORT)
+                .setAction(R.string.retry_title, view -> {
+                    isFromSnackBar.set(true);
+                    fetchData();
+                })
+                .show();
     }
 
     private void showEmptyPlaceholder(boolean needShow) {
