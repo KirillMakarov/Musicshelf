@@ -58,7 +58,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         isFirstTimeCreated = true;
-        fetchData();
     }
 
     @Nullable
@@ -79,6 +78,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         showEmptyPlaceholder(singerList.isEmpty());
         isFromSnackBar.set(false);
+        fetchData();
     }
 
     @Override
@@ -179,10 +179,8 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     private void showData(List<Singer> singers) {
-        // FIXME: 27.03.16 it can be doing before onCreateView, just after onCreate.
-        emptyPlaceholder.setVisibility(View.GONE);
         Log.d("eee", "data is fetched");
-//        singerList.clear();
+        singerList.clear();
         singerList.addAll(singers);
         isFirstTimeCreated = false;
         showEmptyPlaceholder(singerList.isEmpty());
