@@ -15,4 +15,7 @@
     <string name="content_description_no_data">warning: no data, try again later</string>
     <string name="retry_title">retry</string>
     <string name="no_connection">No connection</string>
+    <string name="transition_name_cover_view" translatable="false">coverSmallBig</string>
+    <string name="transition_name_genres_view" translatable="false">genresTransition</string>
+    <string name="transition_name_albums_view" translatable="false">albumsAndSongs</string>
 </resources>

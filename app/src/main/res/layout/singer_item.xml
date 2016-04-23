@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="140dp"
 
@@ -26,6 +27,7 @@
             fresco:placeholderImage="@drawable/placeholder"
             fresco:placeholderImageScaleType="centerCrop"
             tools:src="@drawable/placeholder"
+            style="@style/singerCoverStyle"
             />
 
         <RelativeLayout

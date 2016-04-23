@@ -21,7 +21,9 @@
             fresco:failureImageScaleType="centerCrop"
             fresco:placeholderImage="@drawable/placeholder"
             fresco:placeholderImageScaleType="centerCrop"
-            tools:src="@drawable/placeholder"/>
+            tools:src="@drawable/placeholder"
+            style="@style/singerCoverStyle"
+            />
 
         <RelativeLayout
             android:layout_width="match_parent"

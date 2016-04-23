@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="singerCoverStyle" parent="singerCoverStyle.14"/>
+
+    <style name="singerCoverStyle.14">
+        <item name="android:transitionName"></item>
+    </style>
+</resources>

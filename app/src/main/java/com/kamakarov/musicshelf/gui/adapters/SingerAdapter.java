@@ -1,6 +1,7 @@
 package com.kamakarov.musicshelf.gui.adapters;
 
 import android.content.Context;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.facebook.drawee.view.DraweeView;
 import com.kamakarov.musicshelf.R;
 import com.kamakarov.musicshelf.core.MainApplication;
 import com.kamakarov.musicshelf.gui.IIntentManager;
+import com.kamakarov.musicshelf.gui.activities.MainActivity;
 import com.kamakarov.musicshelf.gui.listeners.OnItemClickListenerInList;
 import com.kamakarov.musicshelf.model.Cover;
 import com.kamakarov.musicshelf.model.Singer;
@@ -23,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 
 public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.UnitViewHolder> implements OnItemClickListenerInList {
@@ -80,10 +83,10 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
 
 
     @Override
-    public void onClickPosition(int position) {
+    public void onClickPositionWithAnimation(int position, ActivityOptionsCompat activityOptionsCompat) {
         if (position >= 0 && position < singerList.size()) {
             Singer singer = singerList.get(position);
-            intentManager.openDetailedInfo(context, singer);
+            intentManager.openDetailedInfoWithAnimation(context, singer, activityOptionsCompat);
         }
     }
 
@@ -101,10 +104,19 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
         @Bind(R.id.singer_albums_songs)
         TextView singerAlbumsAndSongs;
 
+        @BindString(R.string.transition_name_cover_view)
+        String transitionName;
+
         public UnitViewHolder(View itemView, OnItemClickListenerInList listenerInList) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> listenerInList.onClickPosition(getAdapterPosition()));
+            itemView.setOnClickListener(v -> {
+                ActivityOptionsCompat transitionActivityOptions = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) context, singerImage, transitionName);
+                }
+                listenerInList.onClickPositionWithAnimation(getAdapterPosition(), transitionActivityOptions);
+            });
 
         }
     }

@@ -1,5 +1,7 @@
 package com.kamakarov.musicshelf.gui.listeners;
 
+import android.support.v4.app.ActivityOptionsCompat;
+
 public interface OnItemClickListenerInList {
-    void onClickPosition(int position);
+    void onClickPositionWithAnimation(int position, ActivityOptionsCompat activityOptionsCompat);
 }
