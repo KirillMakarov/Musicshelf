@@ -2,6 +2,7 @@ package com.kamakarov.musicshelf.gui.adapters;
 
 import android.content.Context;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +106,13 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
         TextView singerAlbumsAndSongs;
 
         @BindString(R.string.transition_name_cover_view)
-        String transitionName;
+        String coverTransitionName;
+
+        @BindString(R.string.transition_name_albums_view)
+        String albumsTransitionName;
+
+        @BindString(R.string.transition_name_genres_view)
+        String genresTransitionName;
 
         public UnitViewHolder(View itemView, OnItemClickListenerInList listenerInList) {
             super(itemView);
@@ -113,7 +120,12 @@ public final class SingerAdapter extends RecyclerView.Adapter<SingerAdapter.Unit
             itemView.setOnClickListener(v -> {
                 ActivityOptionsCompat transitionActivityOptions = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) context, singerImage, transitionName);
+                    Pair<View, String> coverPair = Pair.create(singerImage, coverTransitionName);
+//                    Pair<View, String> genrePair = Pair.create(singerGenres, genresTransitionName);
+//                    Pair<View, String> albumsPair = Pair.create(singerAlbumsAndSongs, albumsTransitionName);
+                    //just image transition is looked better
+
+                    transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation((MainActivity) context, coverPair);
                 }
                 listenerInList.onClickPositionWithAnimation(getAdapterPosition(), transitionActivityOptions);
             });

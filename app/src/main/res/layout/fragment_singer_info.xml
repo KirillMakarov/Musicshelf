@@ -32,14 +32,14 @@
 
             <TextView
                 android:id="@+id/singer_genres_singer_info"
-                style="@style/weakText"
+                style="@style/genresStyle"
                 android:layout_marginTop="0dp"
                 tools:text="dance, electronics"/>
 
 
             <TextView
                 android:id="@+id/singer_albums_songs_singer_info"
-                style="@style/weakText"
+                style="@style/albumsAndSongsStyle"
                 android:layout_below="@id/singer_genres_singer_info"
                 tools:text="5 альбомов\t\t⋅\t\t44 песни"/>
 

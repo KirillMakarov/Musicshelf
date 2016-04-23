@@ -21,7 +21,7 @@ public final class DetailInfoActivity extends SingleFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Respond to the action bar's Up/Home button
-                finish();
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -6,4 +6,17 @@
     <style name="singerCoverStyle.21" parent="singerCoverStyle.14">
         <item name="android:transitionName">@string/transition_name_cover_view</item>
     </style>
+
+    <style name="genresStyle" parent="genresStyle.21"/>
+
+    <style name="genresStyle.21" parent="genresStyle.14">
+        <item name="android:transitionName">@string/transition_name_genres_view</item>
+    </style>
+
+
+    <style name="albumsAndSongsStyle" parent="albumsAndSongsStyle.21"/>
+
+    <style name="albumsAndSongsStyle.21" parent="albumsAndSongsStyle.14">
+        <item name="android:transitionName">@string/transition_name_albums_view</item>
+    </style>
 </resources>
