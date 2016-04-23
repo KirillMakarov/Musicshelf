@@ -82,7 +82,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         showEmptyPlaceholder(singerList.isEmpty());
-        isFromSnackBar.set(false);
+        isFromSnackBar.set(false);//if update from snackbar -> do not show refreshing, show snackbar again after fail
         fetchData();
     }
 
@@ -98,6 +98,20 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (recyclerView != null) {
+            recyclerView.setAdapter(null);
+            recyclerView = null;
+        }
+
+        mAdapter = null;
+        swipeRefreshLayout = null;
+        emptyPlaceholder = null;
+        rootView = null;
+        super.onDestroyView();
     }
 
     @Override
@@ -130,7 +144,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
                 .doOnNext(list -> {
                     if (swipeRefreshLayout != null) {
                         swipeRefreshLayout.setRefreshing(false);
-                        Log.d("eee", "cancel refresh in next");
                     }
                 })
                 .doOnError(this::onErrorInternetConnection)
@@ -144,8 +157,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     private void onErrorInternetConnection(Throwable throwable) {
-        Log.d("eee", throwable.getMessage());
-
         if (singerList == null || singerList.isEmpty()) {
             showEmptyPlaceholder(true);
         } else {
@@ -155,7 +166,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
 
         if (swipeRefreshLayout != null && (swipeRefreshLayout.isRefreshing() || isFromSnackBar.get())) {
             swipeRefreshLayout.setRefreshing(false);
-            Log.d("eee", "cancel refreshing in error");
             showSnackBarRetry();
         }
 
@@ -182,8 +192,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     private void showData(List<Singer> singers) {
-        Log.d("eee", "data is fetched");
-
         singerList.clear();
         singerList.addAll(singers);
         showEmptyPlaceholder(singerList.isEmpty()); // if it is first time, that we will update from internet
@@ -191,6 +199,5 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
-        Log.d("eee", "count in list: " + singerList.size());
     }
 }
