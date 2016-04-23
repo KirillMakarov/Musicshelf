@@ -88,6 +88,14 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
     public void onRefresh() {
         fetchData();
     }
@@ -110,6 +118,12 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         apiSubscription = api.getSingers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(list -> {
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        Log.d("eee", "cancel refresh in next");
+                    }
+                })
                 .doOnError(this::onErrorInternetConnection)
                 .observeOn(Schedulers.io())
                 .subscribe(this::saveData, throwable -> {/*do nothing, because we handle in doOnError*/});
@@ -138,6 +152,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
 
         if (swipeRefreshLayout != null && (swipeRefreshLayout.isRefreshing() || isFromSnackBar.get())) {
             swipeRefreshLayout.setRefreshing(false);
+            Log.d("eee", "cancel refreshing in error");
             showSnackBarRetry();
         }
 
@@ -173,9 +188,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         showEmptyPlaceholder(singerList.isEmpty());
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
         Log.d("eee", "count in list: " + singerList.size());
     }
 }
