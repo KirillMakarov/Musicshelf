@@ -1,9 +1,12 @@
 package com.kamakarov.musicshelf.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class StringUtil {
-    public static String concatenateWithComma(List<String> stringList) {
+
+    public static String concatenateWithComma(@NotNull List<String> stringList) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < stringList.size(); i++) {
             sb.append(stringList.get(i));
