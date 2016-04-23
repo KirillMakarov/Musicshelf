@@ -21,7 +21,6 @@ public final class SingerDetailInfoFragment extends FragmentBase {
     private static final String SINGER_KEY = "singer_key";
 
     public static SingerDetailInfoFragment newInstance(Singer singer) {
-
         Bundle args = new Bundle();
         args.putParcelable(SINGER_KEY, singer);
 

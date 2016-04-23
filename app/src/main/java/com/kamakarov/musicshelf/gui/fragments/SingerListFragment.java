@@ -28,6 +28,7 @@ import rx.schedulers.Schedulers;
 
 
 public final class SingerListFragment extends FragmentBase implements SwipeRefreshLayout.OnRefreshListener {
+
     public static SingerListFragment newInstance() {
         Bundle args = new Bundle();
 
@@ -51,12 +52,14 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     private final List<Singer> singerList = new ArrayList<>();
     private SingerAdapter mAdapter;
     private boolean isFirstTimeCreated;
-    private AtomicBoolean isFromSnackBar = new AtomicBoolean();
+    private AtomicBoolean isFromSnackBar = new AtomicBoolean(); //this variable can be accessed from different threads.
+    private Subscription databaseSubsctiption;
+    private Subscription apiSubscription;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        setRetainInstance(true); //// TODO: 23.04.16 make presenter and setRetainInstance(false)
         isFirstTimeCreated = true;
     }
 
@@ -74,8 +77,10 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new SingerAdapter(getContext(), singerList);
         recyclerView.setAdapter(mAdapter);
+
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
         showEmptyPlaceholder(singerList.isEmpty());
         isFromSnackBar.set(false);
         fetchData();
@@ -96,12 +101,16 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxUtils.unsubscribeNullSafe(databaseSubsctiption);
+        RxUtils.unsubscribeNullSafe(apiSubscription);
+    }
+
+    @Override
     public void onRefresh() {
         fetchData();
     }
-
-    Subscription databaseSubsctiption;
-    Subscription apiSubscription;
 
     private void fetchData() {
         RxUtils.unsubscribeNullSafe(apiSubscription);
@@ -127,13 +136,6 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
                 .doOnError(this::onErrorInternetConnection)
                 .observeOn(Schedulers.io())
                 .subscribe(this::saveData, throwable -> {/*do nothing, because we handle in doOnError*/});
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxUtils.unsubscribeNullSafe(databaseSubsctiption);
-        RxUtils.unsubscribeNullSafe(apiSubscription);
     }
 
     private void saveData(List<Singer> singers) {
@@ -181,12 +183,14 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
 
     private void showData(List<Singer> singers) {
         Log.d("eee", "data is fetched");
+
         singerList.clear();
         singerList.addAll(singers);
         showEmptyPlaceholder(singerList.isEmpty()); // if it is first time, that we will update from internet
-        isFirstTimeCreated = false;//
-        if (mAdapter != null)
+        isFirstTimeCreated = false;
+        if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
+        }
         Log.d("eee", "count in list: " + singerList.size());
     }
 }

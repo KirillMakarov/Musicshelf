@@ -33,8 +33,10 @@ public class DbManagerImpl implements DbManager {
     }
 
 
+    @Override
     public void addSingers(List<Singer> singerList, boolean canBeUpdated) {
         //this operation should happen on Worker Thread
+        //add all in one transaction for getting only one notification from db.
         BriteDatabase.Transaction transaction = briteDatabase.newTransaction();
         try {
             for (Singer singerItem : singerList) {
@@ -56,6 +58,7 @@ public class DbManagerImpl implements DbManager {
         cv.put(SingerStructure.Column.GENRES, DbParseHelper.parseStringArrayToString(singer.getGenres()));
         cv.put(SingerStructure.Column.LINK, singer.getLink());
 
+        //if in db && we want to update -> update, if not in db -> insert
         boolean isInDb = isInDb(singer.getId());
         if (!isInDb) {
             briteDatabase.insert(SingerStructure.NAME, cv);
@@ -71,13 +74,15 @@ public class DbManagerImpl implements DbManager {
 
             if (!isInDb) {
                 briteDatabase.insert(CoverStructure.NAME, coverCv);
-            } else {
+            } else if (canBeUpdated){
                 briteDatabase.update(CoverStructure.NAME, coverCv, CoverStructure.Column.SINGER_ID + "= ?", singer.getId() + "");
             }
         }
     }
 
+    @Override
     public Observable<List<Singer>> getSingers() {
+        //if db is changed then push list of all singers.
         return briteDatabase
                 .createQuery(SingerStructure.NAME,
                         "SELECT * FROM " + SingerStructure.NAME + " INNER JOIN " + CoverStructure.NAME +

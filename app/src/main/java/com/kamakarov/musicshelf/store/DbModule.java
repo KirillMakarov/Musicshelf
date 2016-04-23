@@ -10,6 +10,9 @@ import dagger.Module;
 import dagger.Provides;
 import rx.schedulers.Schedulers;
 
+/**
+ * This module should be available in Db implementation (db layer).
+ */
 @Module
 public class DbModule {
     Context context;
