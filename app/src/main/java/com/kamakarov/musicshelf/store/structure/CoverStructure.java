@@ -5,7 +5,7 @@ public class CoverStructure {
         public final static String NAME = "covers";
 
         public static class Column {
-            public static final String SINGER_ID = "singer_id";
+            public static final String SINGER_ID = "singer_id_str";
             public static final String SMALL = "small";
             public static final String BIG = "big";
 
