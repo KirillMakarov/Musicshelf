@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +133,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
                     .getSingers()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::showData);
+                    .subscribe(this::showData); // this result can occurs between onDestroyView() and onCreateView() -> need checking.
         }
 
 
@@ -157,6 +156,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     private void onErrorInternetConnection(Throwable throwable) {
+        if (emptyPlaceholder == null) return;
         if (singerList == null || singerList.isEmpty()) {
             showEmptyPlaceholder(true);
         } else {
@@ -192,6 +192,8 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
     }
 
     private void showData(List<Singer> singers) {
+        if (mAdapter == null || recyclerView == null || emptyPlaceholder == null)
+            return;//checking if this action emmit when fragment is not exist
         singerList.clear();
         singerList.addAll(singers);
         showEmptyPlaceholder(singerList.isEmpty()); // if it is first time, that we will update from internet
