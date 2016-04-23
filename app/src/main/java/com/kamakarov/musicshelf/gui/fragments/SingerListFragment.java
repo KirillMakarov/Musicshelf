@@ -149,6 +149,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
         } else {
             showEmptyPlaceholder(false);
         }
+        isFirstTimeCreated = false;
 
         if (swipeRefreshLayout != null && (swipeRefreshLayout.isRefreshing() || isFromSnackBar.get())) {
             swipeRefreshLayout.setRefreshing(false);
