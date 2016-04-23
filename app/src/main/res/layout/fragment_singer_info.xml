@@ -52,17 +52,11 @@
             <TextView
                 android:id="@+id/singer_description_singer_info"
                 style="@style/regularText"
-                android:layout_marginTop="8dp"
                 android:layout_below="@id/title_biography_singer_info"
+                android:layout_marginTop="8dp"
                 tools:text="Ansgar (latinized Ansgarius; Old Norse Ásgeirr) is a Germanic given name, composed of the elements ans god, and gar spear.[1] Saint Ansgar, (801 – 865) was an archbishop of Hamburg-Bremen, active in the Christianization of Scandinavia. His feast day is 3 February."
                 />
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/id_textview_fragment_singer_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
 
     </LinearLayout>
 </ScrollView>
