@@ -25,12 +25,12 @@ public class DbManagerImpl implements DbManager {
     }
 
 
-    public void addSingers(List<Singer> singerList) {
+    public void addSingers(List<Singer> singerList, boolean canBeUpdated) {
         //this operation should happen on Worker Thread
         BriteDatabase.Transaction transaction = briteDatabase.newTransaction();
         try {
             for (Singer singerItem : singerList) {
-                addSinger(singerItem);
+                addSinger(singerItem, canBeUpdated);
             }
             transaction.markSuccessful();
         } finally {
@@ -38,7 +38,7 @@ public class DbManagerImpl implements DbManager {
         }
     }
 
-    private void addSinger(Singer singer) {
+    private void addSinger(Singer singer, boolean canBeUpdated) {
         ContentValues cv = new ContentValues();
         cv.put(SingerStructure.Column.ID, singer.getId());
         cv.put(SingerStructure.Column.NAME, singer.getName());
@@ -51,7 +51,7 @@ public class DbManagerImpl implements DbManager {
         boolean isInDb = isInDb(singer.getId());
         if (!isInDb) {
             briteDatabase.insert(SingerStructure.NAME, cv);
-        } else {
+        } else if (canBeUpdated) {
             briteDatabase.update(SingerStructure.NAME, cv, SingerStructure.Column.ID + "= ?", singer.getId() + "");
         }
 

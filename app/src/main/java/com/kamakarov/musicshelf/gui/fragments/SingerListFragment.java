@@ -124,7 +124,7 @@ public final class SingerListFragment extends FragmentBase implements SwipeRefre
 
     private void saveData(List<Singer> singers) {
         isFromSnackBar.set(false);
-        dbManager.addSingers(singers);
+        dbManager.addSingers(singers, false);
     }
 
     private void onErrorInternetConnection(Throwable throwable) {

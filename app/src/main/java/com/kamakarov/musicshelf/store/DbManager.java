@@ -7,7 +7,7 @@ import java.util.List;
 import rx.Observable;
 
 public interface DbManager {
-    void addSingers(List<Singer> singerList);
+    void addSingers(List<Singer> singerList, boolean canBeUpdated);
 
     Observable<List<Singer>> getSingers();
 }
