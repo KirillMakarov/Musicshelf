@@ -2,7 +2,6 @@ package com.kamakarov.musicshelf.core;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
@@ -15,7 +14,7 @@ import com.squareup.leakcanary.RefWatcher;
 
 import io.fabric.sdk.android.Fabric;
 
-public final class MainApplication extends MultiDexApplication {
+public final class MainApplication extends Application {
 
     private static MainApplication application;
     private RefWatcher refWatcher;
