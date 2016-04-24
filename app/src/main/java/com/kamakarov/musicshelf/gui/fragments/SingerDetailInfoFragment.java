@@ -10,9 +10,10 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
 import com.kamakarov.musicshelf.R;
-import com.kamakarov.musicshelf.utils.StringUtil;
 import com.kamakarov.musicshelf.model.Singer;
+import com.kamakarov.musicshelf.utils.StringUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,8 +59,11 @@ public final class SingerDetailInfoFragment extends FragmentBase {
             getActivity().setTitle(singer.getName());
 
             DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(singer.getCover().getBig())
+                    .setTapToRetryEnabled(true)
+                    .setLowResImageRequest(ImageRequest.fromUri(singer.getCover().getSmall()))
+                    .setImageRequest(ImageRequest.fromUri(singer.getCover().getBig()))
                     .build();
+
             singerBigImage.setController(controller);
 
             descriptionTextView.setText(singer.getDescription());
