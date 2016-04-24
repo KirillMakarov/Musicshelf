@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="singerCoverStyle" parent="singerCoverStyle.21"/>
+    <style name="singerCoverStyle" parent="singerCoverStyle21"/>
 
-    <style name="singerCoverStyle.21" parent="singerCoverStyle.14">
+    <style name="singerCoverStyle21" parent="singerCoverStyle14">
         <item name="android:transitionName">@string/transition_name_cover_view</item>
     </style>
 
-    <style name="genresStyle" parent="genresStyle.21"/>
+    <style name="genresStyle" parent="genresStyle21"/>
 
-    <style name="genresStyle.21" parent="genresStyle.14">
+    <style name="genresStyle21" parent="genresStyle14">
         <item name="android:transitionName">@string/transition_name_genres_view</item>
     </style>
 
 
-    <style name="albumsAndSongsStyle" parent="albumsAndSongsStyle.21"/>
+    <style name="albumsAndSongsStyle" parent="albumsAndSongsStyle21"/>
 
-    <style name="albumsAndSongsStyle.21" parent="albumsAndSongsStyle.14">
+    <style name="albumsAndSongsStyle21" parent="albumsAndSongsStyle14">
         <item name="android:transitionName">@string/transition_name_albums_view</item>
     </style>
 </resources>

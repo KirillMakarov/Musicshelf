@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="singerCoverStyle" parent="singerCoverStyle.14"/>
+    <style name="singerCoverStyle" parent="singerCoverStyle14"/>
 
-    <style name="singerCoverStyle.14">
+    <style name="singerCoverStyle14">
     </style>
 
-    <style name="genresStyle" parent="genresStyle.14"/>
+    <style name="genresStyle" parent="genresStyle14"/>
 
-    <style name="genresStyle.14" parent="weakText"/>
+    <style name="genresStyle14" parent="weakText"/>
 
-    <style name="albumsAndSongsStyle" parent="albumsAndSongsStyle.14"/>
+    <style name="albumsAndSongsStyle" parent="albumsAndSongsStyle14"/>
 
-    <style name="albumsAndSongsStyle.14" parent="weakText">
+    <style name="albumsAndSongsStyle14" parent="weakText">
     </style>
 </resources>
